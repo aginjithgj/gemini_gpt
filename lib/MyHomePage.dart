@@ -25,6 +25,21 @@ class _MyHomePageState extends State<MyHomePage> {
 @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle:false,
+        backgroundColor: Colors.red,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Image.asset('assets/gpt-robot.png'),
+                const Text('Gemini GPT',style: TextStyle(color: Colors.black),)
+              ],
+            )
+          ],
+        ),
+      ),
       body: Column(
         children: [
           Expanded(
