@@ -31,7 +31,3 @@ linter:
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
 
-use-material-design: true
-assets:
-  - assets/
-  #assets/gpt-robot.png
