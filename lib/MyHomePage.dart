@@ -28,16 +28,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle:false,
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 Image.asset('assets/gpt-robot.png'),
+                const SizedBox(width: 10,),
                 const Text('Gemini GPT',style: TextStyle(color: Colors.black),)
               ],
-            )
+            ),
+             Image.asset('assets/volume-high.png',color: Colors.blue[800],)
           ],
         ),
       ),
