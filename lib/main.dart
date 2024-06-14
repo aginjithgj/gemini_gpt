@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/MyHomePage.dart';
+import 'onbording.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Welcome to Flutter! guys',),
-      home: const MyHomePage(),
+      home: const Onbording(),
     );
   }
 }
