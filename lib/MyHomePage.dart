@@ -58,7 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: message.isUser ? Colors.blue : Colors.grey[300],
+                      color: message.isUser ? 
+                      Theme.of(context).colorScheme.primary :
+                      Theme.of(context).colorScheme.secondary,
                       borderRadius: message.isUser ?
                        const BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -72,8 +74,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     )),
                     child: Text(
                       message.text,
-                      style: TextStyle(color: message.isUser ? Colors.white : Colors.black)
-                      )),
+                      style:
+                      message.isUser ?
+                      Theme.of(context).textTheme.bodyMedium :
+                      Theme.of(context).textTheme.bodySmall,
+                      )
+                      ),
                 ),
               );
             }
