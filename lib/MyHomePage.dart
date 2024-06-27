@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/message.dart';
+//import 'package:myapp/themeNotifier.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/themeNotifier.dart';
 
 
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:175168158.
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:2895448089.
   const MyHomePage({Key? key}) : super(key: key);
@@ -11,10 +14,10 @@ class MyHomePage extends StatefulWidget {
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  ConsumerState<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends ConsumerState<MyHomePage> {
   final TextEditingController _controller = TextEditingController();  
   final List<Message> _message = [
     Message(text: "Hi", isUser: true),
@@ -23,8 +26,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Message(text: "I am fine", isUser: false),
   ];
 
+ 
 @override
   Widget build(BuildContext context) {
+    final currentTheme = ref.read(themeProvider);
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -41,7 +47,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text('Gemini GPT',style: Theme.of(context).textTheme.titleLarge,)
               ],
             ),
-             Image.asset('assets/volume-high.png',color: Colors.blue[800],)
+             GestureDetector(
+              child: (currentTheme == ThemeMode.light)
+              ? const Icon(Icons.dark_mode,color: Colors.blue,)
+              : const Icon(Icons.light_mode,color: Colors.white,),
+              onTap: () {
+                ref.read(themeProvider.notifier).toggleTheme();
+              },
+              )
           ],
         ),
       ),
@@ -50,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             child: ListView.builder(
               itemCount: _message.length,
-            itemBuilder: (contex,index){
+            itemBuilder: (context,index){
             final  message = _message[index];
               return ListTile(
                 title: Align(
@@ -77,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       style:
                       message.isUser ?
                       Theme.of(context).textTheme.bodyMedium :
-                      Theme.of(context).textTheme.bodySmall,
+                      Theme.of(context).textTheme.bodySmall
                       )
                       ),
                 ),
@@ -107,8 +120,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: TextField(
                     controller :_controller,
-                    decoration: const InputDecoration(
+                    style : Theme.of(context).textTheme.titleSmall,
+                    decoration:  InputDecoration(
                       hintText: "Type a message",
+                      hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        color: Colors.grey,
+                        ),
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.symmetric(horizontal: 20)
                     ),
