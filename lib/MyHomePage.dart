@@ -26,6 +26,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     Message(text: "I am fine", isUser: false),
   ];
 
+
  
 @override
   Widget build(BuildContext context) {
@@ -49,8 +50,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             ),
              GestureDetector(
               child: (currentTheme == ThemeMode.light)
-              ? const Icon(Icons.dark_mode,color: Colors.blue,)
-              : const Icon(Icons.light_mode,color: Colors.white,),
+              ?  Icon(Icons.dark_mode,color: Theme.of(context).colorScheme.primary,)
+              :  Icon(Icons.light_mode,color: Theme.of(context).colorScheme.secondary,),
               onTap: () {
                 ref.read(themeProvider.notifier).toggleTheme();
               },
