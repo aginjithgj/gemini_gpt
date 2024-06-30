@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:myapp/message.dart';
 //import 'package:myapp/themeNotifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,11 +22,36 @@ class MyHomePage extends ConsumerStatefulWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   final TextEditingController _controller = TextEditingController();  
   final List<Message> _message = [
-    Message(text: "Hi", isUser: true),
-    Message(text: "Hello how are you?", isUser: false),
-    Message(text: "Grate! you", isUser: true),
-    Message(text: "I am fine", isUser: false),
+    Message(text: "Hi", isUser: false),
+    
   ];
+  bool _isLoading = false;
+
+callGeminiModel() async {
+  try{
+
+    if(_controller.text.isNotEmpty){
+      _message.add(Message(text: _controller.text, isUser: true));
+      _isLoading = true;
+    }
+
+  final model = GenerativeModel(model: 'gemini-pro', apiKey: dotenv.env["GOOGLE_API_KEY"]!);
+  final prompt = _controller.text.trim();
+  final content = [Content.text(prompt)];
+  final response = await model.generateContent(content);
+
+  setState((){
+    _message.add(Message(text: response.text!, isUser: false));
+    _isLoading = false;
+  });
+      
+    _controller.clear();//may be not needed 
+  
+  }
+  catch(e){
+    print("Error : $e");
+  }
+}
 
 
  
@@ -133,14 +160,20 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
                 const SizedBox(width: 8,),
-                    IconButton(onPressed: () {
-            final text = _controller.text;
-            setState(() {
-              _message.insert(0, Message(text: text, isUser: true));
-            });
-            _controller.clear();
-                    }, icon: const Icon(Icons.send, color: Colors.blue, size: 30,),
-                    ),
+                _isLoading ?
+                Padding(
+                  padding: EdgeInsets.all( 16.0),
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ) :
+                 Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: GestureDetector(
+                  child:   Image.asset( 'assets/send.png'),
+                  onTap: callGeminiModel),
+                  
+                  )
               ],
             ),
           ),
