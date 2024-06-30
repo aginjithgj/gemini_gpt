@@ -10,7 +10,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
   
   runApp(
-    ProviderScope(child: MyApp())
+    const ProviderScope(child: MyApp())
   );
 }
 

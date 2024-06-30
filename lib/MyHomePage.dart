@@ -155,14 +155,14 @@ callGeminiModel() async {
                         color: Colors.grey,
                         ),
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20)
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20)
                     ),
                   ),
                 ),
                 const SizedBox(width: 8,),
                 _isLoading ?
                 Padding(
-                  padding: EdgeInsets.all( 16.0),
+                  padding: const EdgeInsets.all( 16.0),
                   child: CircularProgressIndicator(
                     color: Theme.of(context).colorScheme.primary,
                   ),
