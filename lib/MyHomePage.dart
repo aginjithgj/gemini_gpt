@@ -171,11 +171,20 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         )
-                      : Padding(
+                      : Container(
                           padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.blue, // Border color
+                              width: 2.0, // Border width
+                            ),
+                            borderRadius: BorderRadius.circular(
+                                8.0), // Border radius (optional)
+                          ),
                           child: GestureDetector(
-                              onTap: callGeminiModel,
-                              child: Image.asset('assets/send.png')),
+                            onTap: callGeminiModel,
+                            child: Image.asset('assets/send.png'),
+                          ),
                         )
                 ],
               ),
